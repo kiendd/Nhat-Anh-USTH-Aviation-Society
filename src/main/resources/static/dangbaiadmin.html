@@ -1,0 +1,526 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Đăng bài quản trị - USTH</title>
+
+    <link
+        rel="stylesheet"
+        href="dangbaiadmin.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        USTH
+    </div>
+
+    <div class="navbar-title">
+        QUẢN TRỊ HỆ THỐNG
+    </div>
+
+    <button
+        type="button"
+        class="btn-back"
+        id="btnBack">
+
+        ← QUAY LẠI QUẢN TRỊ
+
+    </button>
+
+</nav>
+
+
+<main class="page-container">
+
+    <div class="page-heading">
+
+        <div class="heading-line"></div>
+
+        <div>
+
+            <h1>
+                ĐĂNG BÀI
+            </h1>
+
+            <p>
+                Tạo bài viết mới cho diễn đàn USTH
+            </p>
+
+        </div>
+
+        <div class="heading-line"></div>
+
+    </div>
+
+
+    <div class="post-editor">
+
+
+        <section class="form-section">
+
+            <div class="section-title">
+
+                <span class="number">
+                    01
+                </span>
+
+                <div>
+
+                    <h2>
+                        Thông tin bài viết
+                    </h2>
+
+                    <p>
+                        Nhập thông tin cơ bản của bài viết
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="tieuDe">
+
+                    Tiêu đề
+
+                    <span>*</span>
+
+                </label>
+
+                <input
+                    type="text"
+                    id="tieuDe"
+                    maxlength="200"
+                    placeholder="Nhập tiêu đề bài viết...">
+
+                <div class="input-info">
+
+                    <span
+                        id="titleError"
+                        class="error-text">
+                    </span>
+
+                    <span id="titleCount">
+                        0 / 200
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="theLoai">
+
+                    Thể loại
+
+                    <span>*</span>
+
+                </label>
+
+                <select id="theLoai">
+
+                    <option value="">
+                        -- Chọn thể loại --
+                    </option>
+
+                    <option value="Meme">
+                        Meme
+                    </option>
+
+                    <option value="Kiến thức">
+                        Kiến thức
+                    </option>
+
+                    <option value="Tin tức">
+                        Tin tức
+                    </option>
+
+                    <option value="Hoạt động CLB">
+                        Hoạt động CLB
+                    </option>
+
+                </select>
+
+                <span
+                    id="categoryError"
+                    class="error-text">
+                </span>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="noiDung">
+
+                    Nội dung / mô tả
+
+                    <span>*</span>
+
+                </label>
+
+                <textarea
+                    id="noiDung"
+                    maxlength="5000"
+                    placeholder="Nhập nội dung mô tả cho bài viết..."></textarea>
+
+                <div class="input-info">
+
+                    <span
+                        id="contentError"
+                        class="error-text">
+                    </span>
+
+                    <span id="contentCount">
+                        0 / 5000
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Người đăng
+                </label>
+
+                <div class="admin-info">
+
+                    <div
+                        class="admin-avatar"
+                        id="adminAvatar">
+
+                        A
+
+                    </div>
+
+                    <div>
+
+                        <strong id="adminName">
+                            Admin
+                        </strong>
+
+                        <small>
+                            ADMINISTRATOR
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="form-section">
+
+            <div class="section-title">
+
+                <span class="number">
+                    02
+                </span>
+
+                <div>
+
+                    <h2>
+                        File bài viết
+                    </h2>
+
+                    <p>
+                        Upload tài liệu PDF để người dùng xem trực tiếp
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="uploadArea"
+                class="upload-area">
+
+                <div class="upload-icon">
+                    ↑
+                </div>
+
+                <h3>
+                    Kéo thả file PDF vào đây
+                </h3>
+
+                <p>
+                    hoặc
+                </p>
+
+                <label
+                    for="file"
+                    class="choose-file">
+
+                    CHỌN FILE PDF
+
+                </label>
+
+                <input
+                    type="file"
+                    id="file"
+                    accept="application/pdf,.pdf"
+                    hidden>
+
+                <div class="upload-note">
+
+                    Chỉ hỗ trợ PDF · Tối đa 50MB
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="selectedFile"
+                class="selected-file">
+
+                <div class="pdf-icon">
+                    PDF
+                </div>
+
+                <div class="file-information">
+
+                    <strong id="fileName">
+                        -
+                    </strong>
+
+                    <span id="fileSize">
+                        -
+                    </span>
+
+                </div>
+
+                <button
+                    type="button"
+                    id="previewFile"
+                    class="preview-file">
+
+                    XEM
+
+                </button>
+
+                <button
+                    type="button"
+                    id="removeFile"
+                    class="remove-file">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="fileError"
+                class="file-error">
+            </div>
+
+        </section>
+
+
+        <section class="form-section">
+
+            <div class="section-title">
+
+                <span class="number">
+                    03
+                </span>
+
+                <div>
+
+                    <h2>
+                        Ảnh minh họa
+                    </h2>
+
+                    <p>
+                        Ảnh sẽ hiển thị trên bài viết trước khi người dùng mở bài
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="imageUploadArea"
+                class="image-upload-area">
+
+                <div class="image-upload-icon">
+                    🖼
+                </div>
+
+                <h3>
+                    Chọn ảnh minh họa cho bài viết
+                </h3>
+
+                <p>
+                    JPG, JPEG, PNG hoặc WEBP · Tối đa 5MB
+                </p>
+
+                <label
+                    for="imageFile"
+                    class="choose-image">
+
+                    CHỌN ẢNH
+
+                </label>
+
+                <input
+                    type="file"
+                    id="imageFile"
+                    accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+                    hidden>
+
+            </div>
+
+
+            <div
+                id="selectedImage"
+                class="selected-image">
+
+                <div class="image-preview-box">
+
+                    <img
+                        id="imagePreview"
+                        src=""
+                        alt="Ảnh minh họa">
+
+                </div>
+
+                <div class="image-information">
+
+                    <strong id="imageName">
+                        -
+                    </strong>
+
+                    <span id="imageSize">
+                        -
+                    </span>
+
+                </div>
+
+                <button
+                    type="button"
+                    id="removeImage"
+                    class="remove-image">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="imageError"
+                class="image-error">
+            </div>
+
+        </section>
+
+
+        <section
+            id="previewSection"
+            class="preview-section">
+
+            <div class="preview-header">
+
+                <div>
+
+                    <h2>
+                        Xem trước PDF
+                    </h2>
+
+                    <p>
+                        Kiểm tra tài liệu trước khi đăng
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    id="closePreview"
+                    class="close-preview">
+
+                    Đóng
+
+                </button>
+
+            </div>
+
+            <iframe
+                id="pdfPreview"
+                class="pdf-preview"
+                title="Xem trước PDF">
+            </iframe>
+
+        </section>
+
+
+        <div
+            id="message"
+            class="message">
+        </div>
+
+
+        <div class="action-area">
+
+            <button
+                type="button"
+                id="btnCancel"
+                class="btn-cancel">
+
+                HỦY
+
+            </button>
+
+            <button
+                type="button"
+                id="btnSubmit"
+                class="btn-submit">
+
+                ĐĂNG BÀI
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script src="dangbaiadmin.js"></script>
+
+</body>
+
+</html>
+

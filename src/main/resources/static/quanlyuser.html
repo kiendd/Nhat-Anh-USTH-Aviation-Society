@@ -1,0 +1,185 @@
+```html
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Quản lý User - USTH</title>
+
+    <link rel="stylesheet" href="quanlyuser.css">
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <div class="navbar-left">
+
+            <img src="logo.png" alt="USTH">
+
+            <div class="title">
+                QUẢN LÝ USER
+            </div>
+
+        </div>
+
+        <div class="user-area">
+
+            <span id="adminName"></span>
+
+            <button
+                class="logout"
+                onclick="logout()">
+
+                <i class="bi bi-box-arrow-right"></i>
+                ĐĂNG XUẤT
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="container-admin">
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    <i class="bi bi-people-fill"></i>
+                    QUẢN LÝ USER
+                </h1>
+
+                <p>
+                    Quản lý tài khoản thành viên của USTH Aviation Society.
+                </p>
+
+            </div>
+
+            <div class="total-user">
+
+                <span id="totalUser">
+                    0
+                </span>
+
+                <small>
+                    TÀI KHOẢN
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="toolbar">
+
+            <div class="search-box">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Tìm kiếm theo tên, email...">
+
+            </div>
+
+            <button
+                class="refresh"
+                onclick="loadUsers()">
+
+                <i class="bi bi-arrow-clockwise"></i>
+                LÀM MỚI
+
+            </button>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>HỌ TÊN</th>
+
+                        <th>EMAIL</th>
+
+                        <th>TRƯỜNG</th>
+
+                        <th>NGÀNH</th>
+
+                        <th>NIÊN KHÓA</th>
+
+                        <th>ROLE</th>
+
+                        <th>THAO TÁC</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="userTable">
+
+                    <tr>
+
+                        <td colspan="8" class="loading">
+
+                            <i class="bi bi-hourglass-split"></i>
+
+                            Đang tải dữ liệu...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div id="message"></div>
+
+
+        <button
+            class="back"
+            onclick="window.location.href='admin.html'">
+
+            <i class="bi bi-arrow-left"></i>
+
+            QUAY LẠI QUẢN TRỊ
+
+        </button>
+
+    </div>
+
+
+    <script src="quanlyuser.js"></script>
+
+</body>
+
+</html>
+```

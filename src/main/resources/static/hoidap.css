@@ -1,0 +1,358 @@
+html,
+body {
+    overflow-x: hidden;
+}
+
+body {
+    font-family: "Tektur", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #020817;
+}
+
+.banner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 5px;
+    width: 99.4%;
+    height: 80px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 15px 60px;
+    background: rgba(0, 15, 40, 0.55);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    box-sizing: border-box;
+}
+
+.navbar img {
+    width: 120px;
+}
+
+.navbar-nav {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    list-style: none;
+    margin-left: auto;
+    margin-bottom: 0;
+}
+
+.navbar-nav li a {
+    color: white !important;
+    text-decoration: none;
+}
+
+.footer {
+    position: absolute;
+    top: 2000px;
+    left: 150px;
+    width: calc(100% - 300px);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 100px;
+    box-sizing: border-box;
+    padding-top: 40px;
+}
+
+.footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150px;
+    width: 100vw;
+    height: 1px;
+    background: #666667;
+}
+
+.block1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.block2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.block2 span {
+    color: rgba(128, 128, 128, 0.868);
+}
+
+.block3 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    padding-left: 150px;
+}
+
+.iconlienket {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.iconlienket button {
+    width: 65px;
+    height: 65px;
+    border: 1px solid #273AA4;
+    background: transparent;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.iconlienket button i {
+    font-size: 28px;
+}
+
+.iconlienket button:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.endd {
+    width: 100%;
+    flex-basis: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 30px;
+}
+
+.lineend {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(128, 128, 128, 0.5);
+    margin-bottom: 15px;
+}
+
+.endd span {
+    color: grey;
+    text-align: left;
+}
+
+.baiviet-container {
+    width: calc(100% - 300px);
+    margin-left: 150px;
+    margin-top: 80px;
+    margin-bottom: 250px;
+}
+
+.baiviet-heading {
+    margin-bottom: 50px;
+}
+
+.baiviet-heading span {
+    color: #f1ff57;
+    font-size: 18px;
+}
+
+.baiviet-heading h2 {
+    color: white;
+    font-size: 42px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.baiviet-heading p {
+    color: grey;
+    font-size: 16px;
+}
+
+.baiviet-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.baiviet-box {
+    min-height: 430px;
+    background: #07152f;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.baiviet-box:hover {
+    transform: translateY(-8px);
+    border-color: #f1ff57;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+}
+
+.baiviet-image {
+    width: 100%;
+    height: 210px;
+    background: #020817;
+    overflow: hidden;
+}
+
+.baiviet-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.baiviet-content {
+    padding: 25px;
+}
+
+.baiviet-number {
+    color: #f1ff57;
+    font-size: 14px;
+}
+
+.baiviet-title {
+    color: white;
+    font-size: 22px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.baiviet-description {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 14px;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.baiviet-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.baiviet-user {
+    color: #f1ff57;
+    font-size: 13px;
+}
+
+.baiviet-date {
+    color: grey;
+    font-size: 13px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-top: 60px;
+}
+
+.pagination button {
+    min-width: 110px;
+    padding: 12px 25px;
+    border: 1px solid #f1ff57;
+    border-radius: 8px;
+    background: transparent;
+    color: #f1ff57;
+    font-family: "Tektur", sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+    background: #f1ff57;
+    color: #020817;
+}
+
+.pagination button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.pagination span {
+    color: white;
+    font-family: "Tektur", sans-serif;
+}
+
+@media (max-width: 1000px) {
+
+    .baiviet-container {
+        width: calc(100% - 80px);
+        margin-left: 40px;
+    }
+
+    .baiviet-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .navbar {
+        padding: 15px 20px;
+    }
+
+    .navbar-nav {
+        gap: 15px;
+    }
+
+    .navbar-nav li a {
+        font-size: 12px;
+    }
+
+    .baiviet-container {
+        width: calc(100% - 40px);
+        margin-left: 20px;
+    }
+
+    .baiviet-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .baiviet-heading h2 {
+        font-size: 30px;
+    }
+
+    .footer {
+        left: 40px;
+        width: calc(100% - 80px);
+        gap: 40px;
+    }
+
+    .block3 {
+        padding-left: 0;
+    }
+
+}
+
+.baiviet-container {
+    position: absolute;
+    top: 100px;
+}

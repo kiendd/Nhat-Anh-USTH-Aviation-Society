@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DIỄN ĐÀN</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="diendan.css">
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <img src="logo.png" alt="">
+
+        <ul class="navbar-nav">
+
+            <li>
+                <a href="home.html">TRANG CHỦ</a>
+            </li>
+
+            <li>
+                <a href="introduce.html">GIỚI THIỆU</a>
+            </li>
+
+            <li>
+                <a href="hoatdong.html">HOẠT ĐỘNG</a>
+            </li>
+
+            <li>
+                <a href="gopy.html">GÓP Ý</a>
+            </li>
+
+            <li class="menu-line">
+                <a href="diendanuas.html">DIỄN ĐÀN UAS</a>
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <div class="banner">
+
+        <img src="images/diendan.png" alt="">
+
+    </div>
+
+
+    <div class="container1">
+
+        <span style="color: yellow;">
+            DIỄN ĐÀN HÀNG KHÔNG
+        </span>
+
+        <span style="color: yellow;">
+            USTH AVIATION SOCIETY
+        </span>
+
+        <div id="authArea"></div>
+
+    </div>
+
+
+    <div class="line"></div>
+
+
+    <div class="container2">
+
+        <div class="timkiem">
+            <form id="searchForm" action="tatcabaiviet.html" method="GET">
+                <input
+                        type="text"
+                        class="form-control"
+                        name="noidung"
+                        id="noidung"
+                        placeholder="Gõ tiêu đề và nhấn Enter để tìm..."
+                        autocomplete="off">
+            </form>
+        </div>
+
+
+        <div class="block2">
+
+            <div class="noidungblock2">
+
+                <span style="color: yellow; margin-left: 60px;" >
+                    LỌC BÀI VIẾT
+                </span>
+
+              <button class="tatcabaiviet" onclick="window.location.href='tatcabaiviet.html'">
+                <span>
+                    <i class="bi bi-phone"></i>
+                    Tất cả bài viết
+                </span>
+             </button>
+                <button onclick="window.location.href='noibo.html'">
+                    <span>
+                        <i class="bi bi-person-lock"></i>
+                        Nội bộ UAS
+                    </span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="block3">
+
+            <div class="noidungblock3">
+
+                <span style="color: yellow;" id="chudebaiviet" margin-left: 60px;>
+                    CHỦ ĐỀ BÀI VIẾT
+                </span>
+
+                <button onclick="window.location.href='hoidap.html'">
+
+                    <i class="bi bi-chat-quote"></i>
+
+                    <span>
+                        Hỏi đáp
+                    </span>
+
+                </button>
+
+                <button onclick="window.location.href='sukien.html'">
+
+                    <i class="bi bi-calendar-date"></i>
+
+                    <span>
+                        Sự kiện
+                    </span>
+
+                </button>
+
+                <button onclick="window.location.href='thongbao.html'">
+
+                    <i class="bi bi-bell"></i>
+
+                    <span>
+                        Thông báo
+                    </span>
+
+                </button>
+
+                <button onclick="window.location.href='hocthuat.html'">
+
+                    <i class="bi bi-journal-bookmark"></i>
+
+                    <span>
+                        Học thuật và tài liệu
+                    </span>
+
+                </button>
+
+                <button onclick="window.location.href='khac.html'">
+
+                    <i class="bi bi-back"></i>
+
+                    <span>
+                        Khác
+                    </span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="container3">
+
+        <div class="noidung3">
+
+            <span style="color: yellow;">
+                CỘNG ĐỒNG UAS
+            </span>
+
+            <h1 style="color: yellow;">
+                DIỄN ĐÀN HÀNG KHÔNG
+            </h1>
+
+            <span class="text-white d-block">
+                Cộng đồng trao đổi học thuật, hỏi đáp các chủ đề chuyên môn,
+                và chia sẻ thông tin về các hoạt động
+            </span>
+            <span class="text-white d-block">của CLB Hàng không USTH.</span>
+
+        </div>
+
+    </div>
+
+
+    <button class="buttondangbai" id="buttondangbai">
+
+        <span class="text-black">
+            ĐĂNG BÀI DIỄN ĐÀN
+        </span>
+
+    </button>
+    <button class="buttonquantri" id="buttonquantri">
+        <span class="text-black">
+            QUẢN TRỊ HỆ THỐNG
+        </span>
+    </button>
+    <div class="baiviet-container">
+
+    <div class="baiviet-heading">
+
+        <span>
+            CỘNG ĐỒNG UAS
+        </span>
+
+        <h2>
+            BÀI VIẾT MỚI NHẤT
+        </h2>
+
+        <p>
+            Những bài viết mới nhất từ cộng đồng UAS Aviation Society.
+        </p>
+
+    </div>
+
+    <div class="baiviet-grid" id="baivietGrid">
+
+        <div class="baiviet-box">
+            <div class="baiviet-image"></div>
+
+            <div class="baiviet-content">
+                <span class="baiviet-number">#01</span>
+                <h3 class="baiviet-title"></h3>
+                <p class="baiviet-description"></p>
+
+                <div class="baiviet-info">
+                    <span class="baiviet-user"></span>
+                    <span class="baiviet-date"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="baiviet-box">
+            <div class="baiviet-image"></div>
+
+            <div class="baiviet-content">
+                <span class="baiviet-number">#02</span>
+                <h3 class="baiviet-title"></h3>
+                <p class="baiviet-description"></p>
+
+                <div class="baiviet-info">
+                    <span class="baiviet-user"></span>
+                    <span class="baiviet-date"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="baiviet-box">
+            <div class="baiviet-image"></div>
+
+            <div class="baiviet-content">
+                <span class="baiviet-number">#03</span>
+                <h3 class="baiviet-title"></h3>
+                <p class="baiviet-description"></p>
+
+                <div class="baiviet-info">
+                    <span class="baiviet-user"></span>
+                    <span class="baiviet-date"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="baiviet-box">
+            <div class="baiviet-image"></div>
+
+            <div class="baiviet-content">
+                <span class="baiviet-number">#04</span>
+                <h3 class="baiviet-title"></h3>
+                <p class="baiviet-description"></p>
+
+                <div class="baiviet-info">
+                    <span class="baiviet-user"></span>
+                    <span class="baiviet-date"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="baiviet-box">
+            <div class="baiviet-image"></div>
+
+            <div class="baiviet-content">
+                <span class="baiviet-number">#05</span>
+                <h3 class="baiviet-title"></h3>
+                <p class="baiviet-description"></p>
+
+                <div class="baiviet-info">
+                    <span class="baiviet-user"></span>
+                    <span class="baiviet-date"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="baiviet-box">
+            <div class="baiviet-image"></div>
+
+            <div class="baiviet-content">
+                <span class="baiviet-number">#06</span>
+                <h3 class="baiviet-title"></h3>
+                <p class="baiviet-description"></p>
+
+                <div class="baiviet-info">
+                    <span class="baiviet-user"></span>
+                    <span class="baiviet-date"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="baiviet-box">
+            <div class="baiviet-image"></div>
+
+            <div class="baiviet-content">
+                <span class="baiviet-number">#07</span>
+                <h3 class="baiviet-title"></h3>
+                <p class="baiviet-description"></p>
+
+                <div class="baiviet-info">
+                    <span class="baiviet-user"></span>
+                    <span class="baiviet-date"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="baiviet-box">
+            <div class="baiviet-image"></div>
+
+            <div class="baiviet-content">
+                <span class="baiviet-number">#08</span>
+                <h3 class="baiviet-title"></h3>
+                <p class="baiviet-description"></p>
+
+                <div class="baiviet-info">
+                    <span class="baiviet-user"></span>
+                    <span class="baiviet-date"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="baiviet-box">
+            <div class="baiviet-image"></div>
+
+            <div class="baiviet-content">
+                <span class="baiviet-number">#09</span>
+                <h3 class="baiviet-title"></h3>
+                <p class="baiviet-description"></p>
+
+                <div class="baiviet-info">
+                    <span class="baiviet-user"></span>
+                    <span class="baiviet-date"></span>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+    <div class="footer">
+
+        <div class="fblock1">
+
+            <span class="text-white">
+                USTH AVIATION SOCIETY
+            </span>
+
+            <span style="color: gray;">
+                CLB HÀNG KHÔNG - TRƯỜNG ĐẠI HỌC KHOA HỌC VÀ CÔNG
+            </span>
+
+            <span style="color: grey;">
+                NGHỆ HÀ NỘI
+            </span>
+
+            <span style="margin-top: 30px; color: gray;">
+                📧 uas.club@usth.edu.vn
+            </span>
+
+        </div>
+
+
+        <div class="fblock2">
+
+             <span class="text-white">Liên Kết</span>
+
+                <a href="home.html">Trang chủ</a>
+                <a href="introduce.html">Giới Thiệu CLB</a>
+                <a href="hoatdong.html">Hoạt Động</a>
+                <a href="gopy.html">Góp Ý</a>
+                <a href="diendanuas.html">Diễn Đàn UAS</a>
+        </div>
+
+
+        <div class="fblock3">
+
+            <span class="text-white">KÊNH THÔNG TIN CHÍNH THỨC</span>
+                <div class="iconlienket">
+                    <button class="fb" onclick="window.open('https://www.facebook.com/share/1Luq66vwUk/')">
+                    <i class="bi bi-facebook"></i>
+                </button>
+                <button class="ig" onclick="window.open('https://www.instagram.com/uas_3726?igsh=MW9hZmtqbDByZDZveg==')" >
+                    <i class="bi bi-instagram"></i>
+                </button>
+                <button class="tiktok" onclick="window.open('https://www.tiktok.com/@usth.aviation.soc?_r=1&_t=ZS-990xpKoC1lk')">
+                    <i class="bi bi-tiktok"></i>
+                </button>
+                <button class="thread" onclick="window.open('https://www.threads.com/@uas_3726')"> 
+                    <i class="bi bi-threads"></i>
+                </button>
+                </div>
+            </div>
+            <div class="endd">
+                 <div class="lineend"></div>
+                 <span style="color: grey;">© 2026 CLB Hàng Không - USTH</span>
+            </div>
+
+        </div>
+
+
+        <div class="endd">
+
+            <div class="lineend"></div>
+
+            <span style="color: grey;">
+                © 2026 CLB Hàng Không - USTH
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <script src="diendan.js"></script>
+
+</body>
+
+</html>

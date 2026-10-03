@@ -1,0 +1,378 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #172a6b 0%,
+            #071331 45%,
+            #020817 100%
+        );
+
+    color: white;
+
+    min-height: 100vh;
+}
+
+
+/* NAVBAR */
+
+.navbar {
+    height: 75px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 50px;
+
+    background: rgba(2, 8, 23, 0.9);
+
+    border-bottom: 1px solid #d4af37;
+
+    box-shadow:
+        0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+.logo {
+    color: #d4af37;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+.nav-right {
+    display: flex;
+
+    gap: 30px;
+}
+
+.nav-right a {
+    color: #ddd;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    transition: 0.3s;
+}
+
+.nav-right a:hover,
+.nav-right a.active {
+    color: #d4af37;
+}
+
+
+/* CONTAINER */
+
+.container {
+    width: 90%;
+
+    max-width: 1400px;
+
+    margin: 50px auto;
+}
+
+
+/* HEADER */
+
+.page-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    color: #d4af37;
+
+    font-size: 32px;
+
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    color: #aaa;
+
+    margin: 0;
+}
+
+
+/* REFRESH */
+
+.btn-refresh {
+    border: 1px solid #d4af37;
+
+    background: transparent;
+
+    color: #d4af37;
+
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.btn-refresh:hover {
+    background: #d4af37;
+
+    color: #071331;
+}
+
+
+/* STAT */
+
+.stat-box {
+    width: 250px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 20px;
+
+    margin-bottom: 30px;
+
+    background: rgba(15, 30, 75, 0.8);
+
+    border: 1px solid #273aa4;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 0 20px rgba(39, 58, 164, 0.2);
+}
+
+.stat-icon {
+    width: 50px;
+
+    height: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #273aa4;
+
+    color: #d4af37;
+
+    font-size: 24px;
+}
+
+.stat-box span {
+    display: block;
+
+    color: #aaa;
+
+    font-size: 13px;
+}
+
+.stat-box strong {
+    display: block;
+
+    color: white;
+
+    font-size: 25px;
+
+    margin-top: 3px;
+}
+
+
+/* TABLE */
+
+.table-container {
+    overflow-x: auto;
+
+    background: rgba(7, 19, 49, 0.9);
+
+    border: 1px solid #273aa4;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 900px;
+}
+
+thead {
+    background: #111f4c;
+}
+
+th {
+    padding: 18px 15px;
+
+    text-align: left;
+
+    color: #d4af37;
+
+    font-size: 14px;
+
+    border-bottom: 1px solid #273aa4;
+}
+
+td {
+    padding: 18px 15px;
+
+    border-bottom: 1px solid rgba(39, 58, 164, 0.4);
+
+    color: #ddd;
+
+    vertical-align: middle;
+}
+
+tbody tr {
+    transition: 0.2s;
+}
+
+tbody tr:hover {
+    background: rgba(39, 58, 164, 0.15);
+}
+
+
+/* DANH TÍNH */
+
+.danh-tinh {
+    color: #d4af37;
+
+    font-weight: bold;
+}
+
+
+/* CONTENT */
+
+.noi-dung {
+    max-width: 550px;
+
+    white-space: normal;
+
+    line-height: 1.5;
+}
+
+
+/* DATE */
+
+.ngay-gui {
+    color: #aaa;
+
+    white-space: nowrap;
+}
+
+
+/* DELETE */
+
+.btn-delete {
+    border: 1px solid #dc3545;
+
+    background: transparent;
+
+    color: #dc3545;
+
+    padding: 7px 12px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.btn-delete:hover {
+    background: #dc3545;
+
+    color: white;
+}
+
+
+/* LOADING */
+
+.loading {
+    text-align: center;
+
+    padding: 50px;
+
+    color: #aaa;
+
+    font-size: 16px;
+}
+
+
+/* EMPTY */
+
+.empty {
+    text-align: center;
+
+    padding: 60px;
+
+    color: #777;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .logo {
+        font-size: 14px;
+    }
+
+    .nav-right {
+        gap: 12px;
+    }
+
+    .nav-right a {
+        font-size: 12px;
+    }
+
+    .container {
+        width: 95%;
+    }
+
+    .page-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+    .page-header h1 {
+        font-size: 25px;
+    }
+}

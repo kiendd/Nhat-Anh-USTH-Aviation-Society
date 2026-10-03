@@ -1,0 +1,320 @@
+.banner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 5px;
+
+    width: 99.4%;
+    height: 80px;
+
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 15px 60px;
+
+    background: rgba(0, 15, 40, 0.55);
+    backdrop-filter: blur(10px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.navbar img {
+    width: 100px;
+    height: 60px;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
+}
+.navbar-nav {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+
+    list-style: none;
+    margin-left: auto;
+}
+
+.navbar-nav li a {
+    color: white !important;
+    text-decoration: none;
+}
+
+.container1 {
+    position: absolute;
+    display: flex;
+
+    top: 200px;
+    left: 100px;
+
+    flex-direction: column;
+
+    border-left: 3px solid #FFD700;
+
+    padding-left: 50px;
+}
+
+* {
+    font-family: 'Tektur', sans-serif;
+}
+
+.noidung1 {
+    display: flex;
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 40px;
+}
+
+.thenhiemki {
+    position: absolute;
+    top: 530px;
+    margin-left: 570px;
+    margin-top: 100px;
+}
+
+.buttonnhiemki {
+    background: none;
+    border-radius: 20px;
+
+    border: 1px solid yellow;
+
+    padding: 5px 80px;
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.buttonnhiemki:hover {
+    background: none;
+    border-color: #8a2be2;
+    transform: translateY(-5px) scale(1.05);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.khungnoidung {
+    width: 404px;
+    height: 211px;
+
+    padding: 20px;
+
+    background: none;
+
+    border: 2px solid #FFEF63;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.08);
+
+    transition: all 0.3s ease;
+
+    cursor: pointer;
+}
+
+.khungnoidung:hover {
+    background: none;
+    border-color: #8a2be2;
+    transform: translateY(-5px) scale(1.05);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.container2 {
+    top: 900px;
+    left: 50px;
+
+    display: flex;
+
+    position: absolute;
+
+    flex-direction: column;
+
+    gap: 250px;
+}
+
+#noidung2 {
+    margin-left: 1000px;
+}
+
+.khungnoidung i {
+    font-size: 35px;
+
+    display: inline-block;
+
+    transform: rotate(90deg);
+}
+
+.footer {
+    position: absolute;
+
+    top: 2300px;
+    left: 0;
+
+    width: 100%;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: flex-start;
+
+    gap: 100px;
+
+    box-sizing: border-box;
+
+    padding: 30px 150px 0;
+}
+
+.footer::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background: #666667;
+}
+
+.block1 {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 5px;
+}
+
+.block2 {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 20px;
+}
+
+.block2 span {
+    color: rgba(128, 128, 128, 0.868);
+}
+
+.block3 {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 30px;
+
+    padding-left: 150px;
+}
+
+.iconlienket {
+    display: flex;
+
+    flex-direction: row;
+
+    gap: 15px;
+}
+
+.iconlienket button {
+    width: 65px;
+    height: 65px;
+
+    border: 1px solid #273AA4;
+
+    background: transparent;
+
+    border-radius: 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    transition: 0.3s ease;
+}
+
+.iconlienket button i {
+    font-size: 28px;
+}
+
+.iconlienket button:hover {
+    transform: translateY(-5px) scale(1.05);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.endd {
+    width: 100%;
+
+    flex-basis: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    margin-top: 30px;
+}
+
+.lineend {
+    width: 100%;
+    height: 1px;
+
+    background-color: rgba(128, 128, 128, 0.5);
+
+    margin-bottom: 15px;
+}
+
+.endd span {
+    color: grey;
+
+    text-align: left;
+}
+.menu-line {
+    border-bottom: 1px solid white;
+}
+.block2 a {
+    color: rgba(128, 128, 128, 0.868);
+    text-decoration: none;
+}
+
+.block2 a:visited {
+    color: rgba(128, 128, 128, 0.868);
+}
+
+.block2 a:hover {
+    color: #F1FF57;
+}

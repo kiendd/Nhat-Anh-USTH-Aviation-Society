@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Đăng ký - USTH Aviation Society</title>
+
+    <link rel="stylesheet" href="dangki.css">
+</head>
+
+<body>
+
+<div class="register-container">
+
+    <h1>Đăng ký tài khoản</h1>
+
+    <form id="registerForm">
+
+        <!-- Họ tên -->
+        <div class="form-group">
+            <label for="fullName">Họ và tên</label>
+            <input
+                type="text"
+                id="fullName"
+                placeholder="Nhập họ và tên"
+                required
+            >
+        </div>
+
+        <!-- Năm sinh -->
+        <div class="form-group">
+            <label for="birthYear">Năm sinh</label>
+            <input
+                type="number"
+                id="birthYear"
+                placeholder="2005"
+                required
+            >
+        </div>
+
+        <!-- Trường -->
+        <div class="form-group">
+            <label for="school">Trường</label>
+            <input
+                type="text"
+                id="school"
+                value="USTH"
+                required
+            >
+        </div>
+
+        <!-- Chuyên ngành -->
+        <div class="form-group">
+            <label for="major">Chuyên ngành</label>
+            <input
+                type="text"
+                id="major"
+                placeholder="Ví dụ: ICT"
+                required
+            >
+        </div>
+
+        <!-- Niên khóa -->
+        <div class="form-group">
+            <label for="academicYear">Niên khóa</label>
+            <input
+                type="text"
+                id="academicYear"
+                placeholder="2026-2030"
+                required
+            >
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="example@gmail.com"
+                required
+            >
+        </div>
+
+        <!-- Username -->
+        <div class="form-group">
+            <label for="username">Tên đăng nhập</label>
+            <input
+                type="text"
+                id="username"
+                placeholder="Nhập tên đăng nhập"
+                required
+            >
+        </div>
+
+        <!-- Mật khẩu -->
+        <div class="form-group">
+            <label for="password">Mật khẩu</label>
+            <input
+                type="password"
+                id="password"
+                placeholder="Nhập mật khẩu"
+                required
+            >
+        </div>
+
+        <!-- Nhập lại mật khẩu -->
+        <div class="form-group">
+            <label for="confirmPassword">Nhập lại mật khẩu</label>
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Nhập lại mật khẩu"
+                required
+            >
+        </div>
+
+        <!-- Button -->
+        <button type="submit">
+            Đăng ký
+        </button>
+
+    </form>
+
+    <!-- Thông báo -->
+    <p id="message"></p>
+
+    <!-- Link đăng nhập -->
+    <div class="login-link">
+        Đã có tài khoản?
+        <a href="login.html">Đăng nhập</a>
+    </div>
+
+</div>
+
+<script src="dangki.js"></script>
+
+</body>
+</html>

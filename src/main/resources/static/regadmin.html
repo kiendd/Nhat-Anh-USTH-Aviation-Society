@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Admin</title>
+    <link rel="stylesheet" href="regadmin.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="form-box">
+
+        <h1>TẠO TÀI KHOẢN ADMIN</h1>
+
+        <p class="welcome">
+            Người tạo:
+            <span id="username"></span>
+        </p>
+
+        <form id="adminForm">
+
+            <div class="input-group">
+                <label>Họ và tên</label>
+                <input
+                    type="text"
+                    id="fullName"
+                    placeholder="Nhập họ và tên"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Năm sinh</label>
+                <input
+                    type="number"
+                    id="birthYear"
+                    placeholder="Ví dụ: 2005"
+                    min="1900"
+                    max="2100"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Trường</label>
+                <input
+                    type="text"
+                    id="school"
+                    placeholder="Nhập tên trường"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Ngành học</label>
+                <input
+                    type="text"
+                    id="major"
+                    placeholder="Nhập ngành học"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Năm học</label>
+                <input
+                    type="text"
+                    id="academicYear"
+                    placeholder="Ví dụ: K2024"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Nhập email"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Tên đăng nhập</label>
+                <input
+                    type="text"
+                    id="adminUsername"
+                    placeholder="Nhập username Admin"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Mật khẩu</label>
+
+                <div class="password-box">
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Nhập mật khẩu"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        id="togglePassword">
+                        Hiện
+                    </button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Xác nhận mật khẩu</label>
+
+                <div class="password-box">
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Nhập lại mật khẩu"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        id="toggleConfirmPassword">
+                        Hiện
+                    </button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Quyền</label>
+
+                <input
+                    type="text"
+                    value="ADMIN"
+                    disabled
+                >
+            </div>
+
+            <button
+                type="submit"
+                class="btn-create">
+                TẠO TÀI KHOẢN ADMIN
+            </button>
+
+            <div id="message"></div>
+
+        </form>
+
+        <div class="buttons">
+
+            <button
+                type="button"
+                onclick="window.location.href='admin.html'">
+                QUAY LẠI
+            </button>
+
+            <button
+                type="button"
+                onclick="logout()">
+                ĐĂNG XUẤT
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="regadmin.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Quản lý góp ý - USTH</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="quanlygopy.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            USTH AVIATION SOCIETY
+        </div>
+
+        <div class="nav-right">
+
+            <a href="index.html">
+                Trang chủ
+            </a>
+
+            <a href="quanlybaiviet.html">
+                Quản lý bài viết
+            </a>
+
+            <a href="quanlygopy.html" class="active">
+                Quản lý góp ý
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <main class="container">
+
+        <div class="page-header">
+
+            <div>
+                <h1>
+                    <i class="bi bi-chat-left-text"></i>
+                    Quản lý góp ý
+                </h1>
+
+                <p>
+                    Danh sách góp ý từ thành viên
+                </p>
+            </div>
+
+            <button
+                class="btn-refresh"
+                onclick="loadGopY()">
+
+                <i class="bi bi-arrow-clockwise"></i>
+                Làm mới
+
+            </button>
+
+        </div>
+
+
+        <div class="stat-box">
+
+            <div class="stat-icon">
+                <i class="bi bi-chat-square-text"></i>
+            </div>
+
+            <div>
+
+                <span>Tổng số góp ý</span>
+
+                <strong id="totalGopY">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            STT
+                        </th>
+
+                        <th>
+                            Danh tính
+                        </th>
+
+                        <th>
+                            Nội dung
+                        </th>
+
+                        <th>
+                            Ngày gửi
+                        </th>
+
+                        <th>
+                            Thao tác
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="gopyTable">
+
+                    <tr>
+
+                        <td colspan="5"
+                            class="loading">
+
+                            <i class="bi bi-arrow-repeat"></i>
+
+                            Đang tải góp ý...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+
+    <script src="quanlygopy.js"></script>
+
+</body>
+
+</html>
