@@ -1,15 +1,42 @@
-# Cấu hình chạy trên server, phục vụ qua subdomain usth.laviehanoi.com.
+# Chạy trên server, phục vụ qua subdomain usth.laviehanoi.com.
 #
-# Dùng MySQL có sẵn trên server (container `web_mysql`), KHÔNG khởi động MySQL riêng.
-# Container đặt tên `web_usth` theo convention web_* để nginx proxy tới được.
+# Stack gồm 2 service:
+#   mysql    MySQL 8 RIÊNG của dự án, chỉ nằm trong network nội bộ `internal`
+#            (không publish cổng, không dùng chung với web_mysql của server).
+#   backend  Spring Boot, container `web_usth`. Nối thêm vào network dùng chung
+#            (mặc định kien_webnet) để nginx proxy tới http://web_usth:8090.
 #
 #   docker network inspect kien_webnet >/dev/null 2>&1 || docker network create kien_webnet
 #   docker compose up -d --build
 #
-# Chạy local kèm MySQL riêng:
+# Chạy local (mở cổng ra host, CORS *):
 #   docker compose -f docker-compose.yml -f docker-compose.local.yml up -d --build
 
 services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: usth_mysql
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    environment:
+      TZ: Asia/Ho_Chi_Minh
+      # Chỉ có hiệu lực ở lần khởi tạo volume đầu tiên. Đổi mật khẩu về sau phải
+      # đổi trong MySQL, hoặc xoá volume mysql-data nếu chưa có dữ liệu cần giữ.
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:?Cần đặt DB_PASSWORD trong .env}
+      MYSQL_DATABASE: ${DB_NAME:-usth_aviation}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$$MYSQL_ROOT_PASSWORD\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
 
   backend:
     build:
@@ -17,26 +44,28 @@ services:
       dockerfile: Dockerfile
     container_name: web_usth
     restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
     environment:
-      # Database — trỏ tới container MySQL có sẵn trong network.
-      # DB_PORT là cổng NỘI BỘ của container MySQL (3306), không phải cổng map ra host.
-      DB_HOST: ${DB_HOST:-web_mysql}
-      DB_PORT: ${DB_PORT:-3306}
+      # Database — MySQL riêng ở trên, nối qua network `internal`.
+      DB_HOST: usth_mysql
+      DB_PORT: 3306
       DB_NAME: ${DB_NAME:-usth_aviation}
-      DB_USERNAME: ${DB_USERNAME:-root}
-      DB_PASSWORD: ${DB_PASSWORD:-HAILONG_DEV}
+      DB_USERNAME: root
+      DB_PASSWORD: ${DB_PASSWORD}
 
       # Ứng dụng
       SERVER_PORT: 8090
       UPLOAD_DIR: /app/uploads
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-https://usth.laviehanoi.com}
-      JWT_SECRET: ${JWT_SECRET:-USTH_Aviation_Society_Secret_Key_2026_123456789}
+      JWT_SECRET: ${JWT_SECRET:?Cần đặt JWT_SECRET trong .env (>= 32 ký tự)}
 
       # JPA
       JPA_DDL_AUTO: ${JPA_DDL_AUTO:-update}
       JPA_SHOW_SQL: ${JPA_SHOW_SQL:-false}
     expose:
-      # Chỉ mở trong network nội bộ; nginx proxy tới http://web_usth:8090
+      # Chỉ mở trong network; nginx proxy tới http://web_usth:8090
       - "8090"
     ports:
       # Bind vào loopback để debug trực tiếp trên server mà không lộ ra Internet.
@@ -46,6 +75,7 @@ services:
       # Giữ file upload qua các lần restart
       - uploads-data:/app/uploads
     networks:
+      internal:
       webnet:
         # Alias để nginx proxy tới http://web_usth/
         aliases:
@@ -58,7 +88,10 @@ services:
       start_period: 40s
 
 networks:
-  # Network dùng chung với MySQL web_mysql và nginx.
+  # Network riêng giữa backend và MySQL.
+  internal:
+
+  # Network dùng chung với nginx (web_nginx).
   # Đổi qua biến WEB_NETWORK trong .env nếu server dùng tên khác
   # (kiểm tra bằng: docker network ls).
   webnet:
@@ -67,3 +100,4 @@ networks:
 
 volumes:
   uploads-data:
+  mysql-data:

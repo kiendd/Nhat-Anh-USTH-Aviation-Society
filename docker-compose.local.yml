@@ -1,47 +1,24 @@
-# Override cho môi trường local — thêm MySQL riêng thay vì dùng web_mysql của server.
+# Override cho môi trường local — mở cổng ra host để dùng từ trình duyệt / công cụ ngoài.
+# MySQL đã nằm trong docker-compose.yml chính nên không cần khai báo lại.
 #
 # Dùng kèm file chính:
 #   docker compose -f docker-compose.yml -f docker-compose.local.yml up -d --build
 #
-# Yêu cầu: network phải tồn tại (mặc định kien_webnet):
+# Yêu cầu: network dùng chung phải tồn tại (mặc định kien_webnet):
 #   docker network create kien_webnet
 
 services:
 
   mysql:
-    image: mysql:8.0
-    container_name: usth-mysql
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-HAILONG_DEV}
-      MYSQL_DATABASE: ${DB_NAME:-usth_aviation}
     ports:
       # Mở ra host để kết nối bằng công cụ ngoài (tùy chọn)
       - "${MYSQL_HOST_PORT:-3307}:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - webnet
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p${DB_PASSWORD:-HAILONG_DEV}"]
-      interval: 5s
-      timeout: 5s
-      retries: 20
-      start_period: 30s
 
   backend:
-    depends_on:
-      mysql:
-        condition: service_healthy
     environment:
-      # Nối tới container mysql ở trên qua network dùng chung
-      DB_HOST: ${LOCAL_DB_HOST:-mysql}
-      DB_PORT: 3306
       # Local truy cập qua cổng host, không qua nginx
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-*}
-    ports:
-      # Local cần truy cập từ trình duyệt ngoài container
+    # !override: thay hẳn ports của file chính (loopback) thay vì nối thêm,
+    # tránh bind cổng 8090 hai lần.
+    ports: !override
       - "${HOST_PORT:-8090}:8090"
-
-volumes:
-  mysql-data:

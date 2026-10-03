@@ -18,51 +18,81 @@ HTML/CSS/JS thuần được phục vụ trực tiếp từ thư mục `static`.
 Dự án chạy công khai tại **<https://usth.laviehanoi.com>**, phía sau nginx trên server.
 Repo có hai cách chạy, chọn theo môi trường.
 
-### 1.1. Trên server (dùng MySQL có sẵn)
+### 1.1. Trên server
 
-Server đã có container MySQL tên `web_mysql`. `docker-compose.yml` **không** khởi động
-MySQL riêng, chỉ chạy `backend` (container tên `web_usth`) và nối vào network dùng chung
-với nginx.
+`docker-compose.yml` chạy **MySQL 8 riêng của dự án** (container `usth_mysql`) cùng
+`backend` (container `web_usth`). Không dùng chung `web_mysql` của server.
 
 ```bash
-# Network dùng chung phải tồn tại (kiểm tra tên thật: docker network ls)
+# Network dùng chung với nginx phải tồn tại (kiểm tra tên thật: docker network ls)
 docker network inspect kien_webnet >/dev/null 2>&1 || docker network create kien_webnet
 
+cp -n .env.example .env       # rồi sửa DB_PASSWORD và JWT_SECRET
 docker compose up -d --build
 ```
 
-Stack gồm 1 service:
+Stack gồm 2 service:
 
-- `backend` — build từ `Dockerfile`, container name `web_usth`, file upload ở volume
-  `uploads-data`, tham gia network ngoài để nối tới `web_mysql:3306`.
+- `mysql` — `mysql:8.0`, utf8mb4, dữ liệu ở volume `mysql-data`. Chỉ nằm trong network
+  nội bộ `internal`, **không** publish cổng nên không truy cập được từ ngoài.
+- `backend` — build từ `Dockerfile`, file upload ở volume `uploads-data`. Nối vào cả
+  `internal` (để tới `usth_mysql:3306`) và network dùng chung `kien_webnet` (để nginx
+  proxy tới `web_usth:8090`). Chỉ bắt đầu khi `mysql` healthy.
 
-Cấu hình DB mặc định đã trỏ sẵn: `DB_HOST=web_mysql`, `DB_PORT=3306`.
+Database `usth_aviation` được MySQL tự tạo ở lần khởi động đầu, bảng do Hibernate tạo
+(`JPA_DDL_AUTO=update`); không cần tạo tay.
 Cổng `8090` chỉ bind vào `127.0.0.1` trên server (debug nội bộ), truy cập công khai
 đi qua nginx.
 
-> **Lưu ý quan trọng**: `DB_PORT=3306` là cổng **nội bộ** của container MySQL.
-> Cổng map ra host (ví dụ `3307`) chỉ dùng khi nối từ ngoài Docker.
+> **Lưu ý**: `DB_PASSWORD` chỉ có hiệu lực ở lần khởi tạo volume `mysql-data` đầu tiên.
+> Đổi mật khẩu về sau phải đổi trong MySQL, hoặc xoá volume nếu chưa có dữ liệu cần giữ.
 
 #### Nginx cho subdomain
 
-Config mẫu nằm ở `deploy/nginx-usth.conf`. Deploy trên server:
+Config mẫu nằm ở `deploy/usth.laviehanoi.com.conf`, theo cùng mô hình với `laviehanoi.com`:
+Cloudflare **Full (strict)** + Origin Certificate + Authenticated Origin Pulls.
 
-```bash
-sudo cp deploy/nginx-usth.conf /etc/nginx/user_conf.d/usth.laviehanoi.com.conf
-sudo nginx -t && sudo systemctl reload nginx
+Nginx chạy trong container `web_nginx` (Docker Compose, thư mục `Web`), nên cert Cloudflare
+phải được mount vào container. Thêm vào service `nginx` trong `docker-compose.yml` của `Web`
+(nếu chưa có):
+
+```yaml
+    volumes:
+      - ./nginx/nginx_secrets:/etc/letsencrypt
+      - ./nginx/user_conf.d:/etc/nginx/user_conf.d:ro
+      - /etc/ssl/cloudflare:/etc/ssl/cloudflare:ro   # cert Origin + origin-pull-ca.pem
 ```
 
-Config proxy `http://web_usth:8090` và truyền `Host`, `X-Real-IP`, `X-Forwarded-*`.
-Backend đọc các header này nhờ `server.forward-headers-strategy=framework`.
+Các file cần có trên host (cert Origin mặc định phủ `*.laviehanoi.com`, dùng chung với
+`laviehanoi.com`):
 
-#### DNS
+```
+/etc/ssl/cloudflare/laviehanoi.com.pem
+/etc/ssl/cloudflare/laviehanoi.com.key
+/etc/ssl/cloudflare/origin-pull-ca.pem
+```
 
-Trỏ bản ghi `A` (hoặc `CNAME`) cho `usth.laviehanoi.com` về IP server. Nếu dùng
-Cloudflare, thêm subdomain vào cùng zone `laviehanoi.com`.
+Deploy trên server (thư mục `Web`):
 
-### 1.2. Chạy local (kèm MySQL riêng)
+```bash
+cp usth.laviehanoi.com.conf nginx/user_conf.d/usth.laviehanoi.com.conf
+docker compose up -d nginx        # tạo lại container nếu vừa thêm volume mới
+docker compose exec nginx nginx -t && docker compose exec nginx nginx -s reload
+```
 
-Thêm file override để tự dựng MySQL, không cần MySQL có sẵn:
+Config redirect HTTP → HTTPS, proxy `http://web_usth:8090` và truyền `Host`, `X-Real-IP`,
+`X-Forwarded-*`. Backend đọc các header này nhờ `server.forward-headers-strategy=framework`.
+`web_nginx` phải cùng Docker network với `web_usth` để resolve được tên này.
+
+#### DNS và Cloudflare
+
+Thêm bản ghi `A` (hoặc `CNAME`) `usth` trong zone `laviehanoi.com` trỏ về IP server,
+**bật proxy (đám mây cam)**. Authenticated Origin Pulls đã bật ở mức zone nên áp dụng
+luôn cho subdomain; vì `ssl_verify_client on`, truy cập thẳng IP sẽ bị từ chối.
+
+### 1.2. Chạy local
+
+Dùng thêm file override để mở cổng ra host (backend `8090`, MySQL `3307`) và đặt CORS `*`:
 
 ```bash
 docker network inspect kien_webnet >/dev/null 2>&1 || docker network create kien_webnet
@@ -70,9 +100,7 @@ docker network inspect kien_webnet >/dev/null 2>&1 || docker network create kien
 docker compose -f docker-compose.yml -f docker-compose.local.yml up -d --build
 ```
 
-Lúc này có 2 service: `mysql` (MySQL 8, cổng host `3307`, volume `mysql-data`) và
-`backend` (chờ `mysql` healthy rồi mới khởi động). Cổng `8090` mở ra host để truy cập
-từ trình duyệt; CORS mặc định `*`.
+Stack vẫn là `mysql` + `backend`, giống trên server; chỉ khác phần mở cổng.
 
 ### 1.3. Lệnh hữu ích
 
@@ -80,14 +108,14 @@ từ trình duyệt; CORS mặc định `*`.
 docker compose ps                 # trạng thái các service
 docker compose logs -f backend    # xem log backend
 docker compose down               # dừng (giữ dữ liệu)
-docker compose down -v            # dừng và xoá toàn bộ dữ liệu (cả volume uploads)
+docker compose down -v            # dừng và xoá toàn bộ dữ liệu (volume uploads và database)
 ```
 
 - Local: <http://localhost:8090>
 - Server: <https://usth.laviehanoi.com>
 
-> Nếu máy đã có container tên `web_usth` / `usth-mysql` từ trước, xoá trước khi `up`:
-> `docker rm -f web_usth usth-mysql`
+> Nếu máy đã có container tên `web_usth` / `usth_mysql` từ trước, xoá trước khi `up`:
+> `docker rm -f web_usth usth_mysql`
 
 ---
 
@@ -122,12 +150,9 @@ export SERVER_PORT=8090
 |---|---|---|
 | `SERVER_PORT` | `8090` | Cổng HTTP trong container |
 | `HOST_PORT` | `8090` | Cổng map ra host (server bind `127.0.0.1`, local mở ra ngoài) |
-| `DB_HOST` | `web_mysql` | Host MySQL; trên server là tên container trong network `kien_webnet` |
-| `DB_PORT` | `3306` | Cổng **nội bộ** container MySQL (không phải cổng map ra host) |
-| `DB_NAME` | `usth_aviation` | Tên database |
-| `DB_USERNAME` | `root` | Tài khoản MySQL |
-| `DB_PASSWORD` | `HAILONG_DEV` | Mật khẩu MySQL |
-| `MYSQL_HOST_PORT` | `3307` | Chỉ dùng với `docker-compose.local.yml`: cổng MySQL riêng map ra host |
+| `DB_NAME` | `usth_aviation` | Tên database, được MySQL trong compose tự tạo |
+| `DB_PASSWORD` | bắt buộc | Mật khẩu `root` của MySQL riêng; compose không chạy nếu thiếu |
+| `MYSQL_HOST_PORT` | `3307` | Chỉ dùng với `docker-compose.local.yml`: cổng MySQL map ra host |
 | `JPA_DDL_AUTO` | `update` | Chế độ tạo bảng của Hibernate (`update`, `validate`, `none`) |
 | `JPA_SHOW_SQL` | `true` (local), `false` (compose) | In câu SQL ra log |
 | `UPLOAD_DIR` | `uploads` (local), `/app/uploads` (compose) | Thư mục lưu file upload |
@@ -136,7 +161,7 @@ export SERVER_PORT=8090
 | `CORS_ALLOWED_ORIGINS` | `*` | Danh sách origin được phép gọi API, phân tách bằng dấu phẩy |
 
 Giá trị mặc định trong `application.properties` (khi chạy `./mvnw spring-boot:run` trực tiếp)
-là `DB_HOST=localhost`, `DB_PORT=3307`. Compose ghi đè thành `web_mysql:3306`.
+là `DB_HOST=localhost`, `DB_PORT=3307`. Docker Compose ghi đè thành `usth_mysql:3306`.
 
 Ví dụ giới hạn CORS cho một domain cụ thể:
 
@@ -144,13 +169,9 @@ Ví dụ giới hạn CORS cho một domain cụ thể:
 CORS_ALLOWED_ORIGINS=https://usth-aviation.example.com,http://localhost:5500
 ```
 
-**Phân biệt cổng host và cổng nội bộ** — đây là chỗ dễ cấu hình sai nhất:
-
-| Backend chạy ở đâu | `DB_HOST` | `DB_PORT` |
-|---|---|---|
-| Trong compose (network `kien_webnet`) | `web_mysql` | `3306` |
-| Ngoài Docker, MySQL map ra host | `localhost` | cổng map ra host (ví dụ `3307`) |
-| Trên máy khác trong LAN | IP/hostname máy đó | cổng MySQL thật (thường `3306`) |
+**MySQL không publish cổng ra ngoài** — trong compose, backend nối tới MySQL qua network
+nội bộ nên luôn dùng cổng `3306`. Chỉ khi chạy với `docker-compose.local.yml` mới có cổng
+host (`MYSQL_HOST_PORT`, mặc định `3307`) để nối từ công cụ ngoài Docker.
 
 ### 2.3. Cấu hình frontend
 
@@ -237,47 +258,34 @@ redirect `/` → `/home.html` trong `WebConfig`. Nếu vẫn thấy 404, thử h
 trình duyệt (cache), hoặc mở trực tiếp <http://localhost:8090/home.html>.
 
 **Backend không kết nối được database**
-Kiểm tra `DB_HOST` / `DB_PORT` / `DB_PASSWORD`. Backend trong compose phải dùng
-`DB_HOST=web_mysql` (tên container MySQL trong network `kien_webnet`) và `DB_PORT=3306`,
-không phải `localhost:3307`.
+MySQL của dự án chạy trong container `usth_mysql`, chỉ nằm trong network nội bộ của
+compose. Backend luôn nối tới `usth_mysql:3306` bằng tài khoản `root` và `DB_PASSWORD`
+trong `.env`; không cần (và không thể) chỉnh `DB_HOST` / `DB_PORT` / `DB_USERNAME`.
 
 Kiểm tra theo thứ tự:
 
 ```bash
-# 1. Backend có tham gia network kien_webnet không
-docker inspect web_usth --format '{{json .NetworkSettings.Networks}}'
+# 1. MySQL có healthy không
+docker compose ps
 
 # 2. Từ trong backend, TCP tới MySQL có thông không
-docker exec -it web_usth bash -c 'exec 3<>/dev/tcp/web_mysql/3306 && echo "OK"'
+docker compose exec backend bash -c 'exec 3<>/dev/tcp/usth_mysql/3306 && echo "OK"'
 
-# 3. MySQL có thấy kết nối / user có quyền từ container không
-docker exec -it web_mysql mysql -uroot -p -e "SELECT user, host FROM mysql.user;"
+# 3. Đăng nhập MySQL và xem database
+docker compose exec mysql sh -c 'mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -e "SHOW DATABASES;"'
 
 # 4. Log backend
 docker compose logs backend | grep -iE "hikari|communications|access denied"
 ```
 
-Nếu bước 2 lỗi `Network is unreachable` hoặc không resolve được tên: container
-`web_mysql` không nằm cùng network `kien_webnet` với backend. Kiểm tra:
-
-```bash
-docker network inspect kien_webnet --format '{{range .Containers}}{{.Name}} {{end}}'
-```
-
-Nếu bước 3 cho thấy user chỉ có `host = localhost`, tạo user cho phép nối từ container:
-
-```sql
-CREATE USER 'app'@'%' IDENTIFIED BY '<password>';
-GRANT ALL PRIVILEGES ON usth_aviation.* TO 'app'@'%';
-FLUSH PRIVILEGES;
-```
-
-rồi đặt `DB_USERNAME=app`, `DB_PASSWORD=<password>` trong `.env`.
+`Access denied` dù `DB_PASSWORD` đúng: biến `MYSQL_ROOT_PASSWORD` chỉ có hiệu lực ở lần
+khởi tạo volume `mysql-data` đầu tiên. Nếu đã đổi `DB_PASSWORD` sau đó và chưa có dữ liệu
+cần giữ, xoá volume rồi tạo lại: `docker compose down -v && docker compose up -d`.
 
 **Cổng đã bị chiếm**
 Mặc định dự án dùng `8090` để tránh trùng phpMyAdmin (thường ở `8080`) trên server.
 Muốn đổi, sửa `SERVER_PORT` (và `HOST_PORT`) trong `.env`, **đồng thời** sửa
-`proxy_pass` trong `deploy/nginx-usth.conf` cho khớp, rồi:
+`proxy_pass` trong `deploy/usth.laviehanoi.com.conf` cho khớp, rồi:
 
 ```bash
 docker compose up -d
@@ -291,9 +299,8 @@ Network chưa tồn tại trên máy/server. Tạo trước khi `up`:
 docker network create kien_webnet
 ```
 
-Trên server, nếu `web_mysql` đã chạy trong network có tên khác, kiểm tra tên thật
-bằng `docker network ls` và sửa lại `name:` trong khối `networks` của
-`docker-compose.yml`.
+Trên server, nếu nginx nằm trong network có tên khác, kiểm tra tên thật bằng
+`docker network ls` rồi đặt `WEB_NETWORK=<tên-thật>` trong `.env`.
 
 **Lỗi CORS khi gọi API từ domain khác**
 Thêm origin vào `CORS_ALLOWED_ORIGINS`, phân tách bằng dấu phẩy.
