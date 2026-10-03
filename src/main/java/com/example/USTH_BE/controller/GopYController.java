@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/gopy")
-@CrossOrigin(origins = "*")
 public class GopYController {
 
     private final GopYRepository gopYRepository;

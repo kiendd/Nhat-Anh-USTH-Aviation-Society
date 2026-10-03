@@ -6,8 +6,7 @@ import com.example.USTH_BE.repository.BaiDangRepository;
 import com.example.USTH_BE.repository.UserRepository;
 import com.example.USTH_BE.util.JwtUtil;
 
-import lombok.RequiredArgsConstructor;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +19,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class DienDanService {
 
     private final BaiDangRepository baiDangRepository;
@@ -28,6 +26,28 @@ public class DienDanService {
     private final UserRepository userRepository;
 
     private final JwtUtil jwtUtil;
+
+    private final Path imageDirectory;
+
+    public DienDanService(
+            BaiDangRepository baiDangRepository,
+            UserRepository userRepository,
+            JwtUtil jwtUtil,
+            @Value("${app.upload.dir}") String uploadDir
+    ) {
+
+        this.baiDangRepository = baiDangRepository;
+
+        this.userRepository = userRepository;
+
+        this.jwtUtil = jwtUtil;
+
+        this.imageDirectory =
+                Paths.get(uploadDir)
+                        .toAbsolutePath()
+                        .normalize()
+                        .resolve("images");
+    }
 
     public BaiDang dangBai(
             String token,
@@ -115,7 +135,7 @@ public class DienDanService {
                             + extension;
 
             Path uploadPath =
-                    Paths.get("uploads/images");
+                    imageDirectory;
 
             Files.createDirectories(
                     uploadPath

@@ -9,9 +9,8 @@ const searchInput = document.getElementById("searchInput");
 const statusFilter = document.getElementById("statusFilter");
 const message = document.getElementById("message");
 
-const BACKEND_URL = "https://seventh-corny-purse.ngrok-free.dev";
-const API_URL = `${BACKEND_URL}/api/diendan`;
-const UPLOAD_URL = `${BACKEND_URL}/uploads/`;
+const API_URL = (window.APP_CONFIG.apiBase || "") + "/api/diendan";
+const UPLOAD_URL = (window.APP_CONFIG.apiBase || "") + window.APP_CONFIG.uploadBase;
 
 if (
     !token ||

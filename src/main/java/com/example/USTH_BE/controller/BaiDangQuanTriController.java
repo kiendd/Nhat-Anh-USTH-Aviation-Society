@@ -17,12 +17,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/diendan/admin")
 @RequiredArgsConstructor
-@CrossOrigin(
-        origins = {
-                "http://localhost:5500",
-                "http://127.0.0.1:5500"
-        }
-)
 public class BaiDangQuanTriController {
 
     private final BaiDangQuanTriService service;

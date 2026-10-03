@@ -12,14 +12,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(
-        origins = {
-                "http://127.0.0.1:5500",
-                "https://seventh-corny-purse.ngrok-free.dev",
-                "http://localhost:5500"
-
-        }
-)
 @RequiredArgsConstructor
 public class AuthController {
 

@@ -1,4 +1,4 @@
-const API_URL = "/api/diendan/admin/the-loai/Meme";
+const API_URL = (window.APP_CONFIG.apiBase || "") + "/api/diendan/admin/the-loai/Meme";
 
 let memes = [];
 let currentPage = 1;
@@ -67,7 +67,7 @@ function renderMeme() {
             const image = document.createElement("img");
 
             image.src =
-                "http://localhost:8080" +
+                (window.APP_CONFIG.apiBase || "") +
                 meme.anhMinhHoa;
 
             image.alt =
@@ -83,7 +83,7 @@ function renderMeme() {
             }
 
             const pdfUrl =
-                "http://localhost:8080" +
+                (window.APP_CONFIG.apiBase || "") +
                 meme.filePdf;
 
             window.open(pdfUrl, "_blank");

@@ -1,4 +1,4 @@
-const API_URL = "/api/diendan/admin/the-loai/Tin%20t%E1%BB%A9c";
+const API_URL = (window.APP_CONFIG.apiBase || "") + "/api/diendan/admin/the-loai/Tin%20t%E1%BB%A9c";
 
 let tinTucs = [];
 let currentPage = 1;
@@ -68,7 +68,7 @@ function renderTinTuc() {
             const image = document.createElement("img");
 
             image.src =
-                "http://localhost:8080" +
+                (window.APP_CONFIG.apiBase || "") +
                 tinTuc.anhMinhHoa;
 
             image.alt =
@@ -84,7 +84,7 @@ function renderTinTuc() {
             }
 
             const pdfUrl =
-                "http://localhost:8080" +
+                (window.APP_CONFIG.apiBase || "") +
                 tinTuc.filePdf;
 
             window.open(pdfUrl, "_blank");

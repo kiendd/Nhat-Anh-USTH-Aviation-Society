@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jwts;
@@ -13,13 +14,22 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtil {
 
-    private final String SECRET =
-            "USTH_Aviation_Society_Secret_Key_2026_123456789";
+    private final SecretKey key;
 
-    private final SecretKey key =
-            Keys.hmacShaKeyFor(
-                    SECRET.getBytes(StandardCharsets.UTF_8)
-            );
+    private final long expirationMs;
+
+    public JwtUtil(
+            @Value("${app.jwt.secret}") String secret,
+            @Value("${app.jwt.expiration-ms}") long expirationMs
+    ) {
+
+        this.key =
+                Keys.hmacShaKeyFor(
+                        secret.getBytes(StandardCharsets.UTF_8)
+                );
+
+        this.expirationMs = expirationMs;
+    }
 
     public String generateToken(Long userId) {
 
@@ -29,7 +39,7 @@ public class JwtUtil {
                 .expiration(
                         new Date(
                                 System.currentTimeMillis()
-                                        + 86400000
+                                        + expirationMs
                         )
                 )
                 .signWith(key)

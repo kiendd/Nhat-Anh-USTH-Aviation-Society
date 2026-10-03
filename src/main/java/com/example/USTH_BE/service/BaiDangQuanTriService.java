@@ -6,8 +6,7 @@ import com.example.USTH_BE.repository.BaiDangQuanTriRepository;
 import com.example.USTH_BE.repository.UserRepository;
 import com.example.USTH_BE.util.JwtUtil;
 
-import lombok.RequiredArgsConstructor;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +16,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class BaiDangQuanTriService {
 
     private final BaiDangQuanTriRepository baiDangQuanTriRepository;
@@ -26,11 +24,35 @@ public class BaiDangQuanTriService {
 
     private final JwtUtil jwtUtil;
 
-    private final Path pdfDirectory =
-            Paths.get("uploads/pdf");
+    private final Path pdfDirectory;
 
-    private final Path imageDirectory =
-            Paths.get("uploads/images");
+    private final Path imageDirectory;
+
+    public BaiDangQuanTriService(
+            BaiDangQuanTriRepository baiDangQuanTriRepository,
+            UserRepository userRepository,
+            JwtUtil jwtUtil,
+            @Value("${app.upload.dir}") String uploadDir
+    ) {
+
+        this.baiDangQuanTriRepository =
+                baiDangQuanTriRepository;
+
+        this.userRepository = userRepository;
+
+        this.jwtUtil = jwtUtil;
+
+        Path baseDirectory =
+                Paths.get(uploadDir)
+                        .toAbsolutePath()
+                        .normalize();
+
+        this.pdfDirectory =
+                baseDirectory.resolve("pdf");
+
+        this.imageDirectory =
+                baseDirectory.resolve("images");
+    }
 
     public BaiDangQuanTri dangBai(
             String token,

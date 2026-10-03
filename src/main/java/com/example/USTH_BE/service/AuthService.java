@@ -7,6 +7,7 @@ import com.example.USTH_BE.repository.BaiDangRepository;
 import com.example.USTH_BE.repository.UserRepository;
 import com.example.USTH_BE.util.JwtUtil;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,16 +26,23 @@ public class AuthService {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final Path imageDirectory;
 
     public AuthService(
             BaiDangRepository baiDangRepository,
             UserRepository userRepository,
-            JwtUtil jwtUtil
+            JwtUtil jwtUtil,
+            @Value("${app.upload.dir}") String uploadDir
     ) {
         this.baiDangRepository = baiDangRepository;
         this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = new BCryptPasswordEncoder();
+        this.imageDirectory =
+                Paths.get(uploadDir)
+                        .toAbsolutePath()
+                        .normalize()
+                        .resolve("images");
     }
 
     public User register(User user) {
@@ -322,7 +330,7 @@ public class AuthService {
                             + extension;
 
             Path uploadPath =
-                    Paths.get("uploads");
+                    imageDirectory;
 
             Files.createDirectories(
                     uploadPath
@@ -340,7 +348,7 @@ public class AuthService {
             );
 
             baiDang.setAnh(
-                    newFileName
+                    "/uploads/images/" + newFileName
             );
         }
 

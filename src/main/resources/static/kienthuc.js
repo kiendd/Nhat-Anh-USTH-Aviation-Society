@@ -1,4 +1,4 @@
-const API_URL = "/api/diendan/admin/the-loai/Ki%E1%BA%BFn%20th%E1%BB%A9c";
+const API_URL = (window.APP_CONFIG.apiBase || "") + "/api/diendan/admin/the-loai/Ki%E1%BA%BFn%20th%E1%BB%A9c";
 
 let kienThucs = [];
 let currentPage = 1;
@@ -67,7 +67,7 @@ function renderKienThuc() {
             const image = document.createElement("img");
 
             image.src =
-                "http://localhost:8080" +
+                (window.APP_CONFIG.apiBase || "") +
                 kienThuc.anhMinhHoa;
 
             image.alt =
@@ -83,7 +83,7 @@ function renderKienThuc() {
             }
 
             const pdfUrl =
-                "http://localhost:8080" +
+                (window.APP_CONFIG.apiBase || "") +
                 kienThuc.filePdf;
 
             window.open(pdfUrl, "_blank");
